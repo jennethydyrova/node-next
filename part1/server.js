@@ -3,7 +3,7 @@ const express = require("express");
 const https = require("https");
 const cors = require("cors");
 
-const httpsPort = 3443;
+const HTTPS_PORT = 3443;
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -27,7 +27,7 @@ async function getServerOptions() {
 
     https
       .createServer({ key: options.key, cert: options.cert }, server)
-      .listen(httpsPort);
+      .listen(HTTPS_PORT);
   } catch (e) {
     process.exit(1);
   }
