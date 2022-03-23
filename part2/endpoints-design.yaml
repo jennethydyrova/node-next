@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server."
+  version: "1.0.0"
+  title: "Swagger"
+basePath: "/v1"
+tags:
+- name: "ping"
+- name: "user"
+
+paths:
+  /ping:
+    get:
+      tags:
+      - "ping"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "Successfully fulfilled the request."
+          schema:
+            $ref: "#/definitions/Ping"
+  /user/{userId}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user id"
+      description: ""
+      operationId: "getUserById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+        - name: "userId"
+          in: path
+          description: "The user id that needs to be fetched."
+          required: true
+          type: "integer"
+          minimum: 0
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user by user id"
+      operationId: "deleteUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "The user that needs to be deleted."
+        required: true
+        type: "integer"
+        minimum: 0
+      responses:
+        "204":
+          description: "Successfully fulfilled the request."
+  /user:
+     post:
+      tags:
+      - "user"
+      summary: "Create user"
+      operationId: "updateUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: body
+        name: body
+        description: "Create new user"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: Returns user id.
+          schema:
+            type: object
+            properties:
+              userId:
+                type: integer
+                description: The user ID.
+definitions:
+  Ping:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "Ok"
+        - "Degraded"
+        - "Severe"
+    xml:
+      name: "Order"
+  User:
+    type: "object"
+    properties:
+      userId:
+        type: "integer"
+        format: "int64"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      role:
+        type: "string"
+        enum:
+        - "admin"
+        - "moderator"
+        - "user"
+      groupId:
+       type: "integer"
+       format: "int32"
+      balance:
+        type: "number"
+    xml:
+      name: "User"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
